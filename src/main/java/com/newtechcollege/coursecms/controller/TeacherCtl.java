@@ -40,7 +40,12 @@ public class TeacherCtl {
         return list;
     }
     /**
-     *
+     *新增教师
      */
+    @RequestMapping(value = "/insert")
+    public int insertTeacher(Teacher teacher){
+        Integer integer = teacherService.insertTeacher(teacher);
+        return integer;
+    }
 
 }
