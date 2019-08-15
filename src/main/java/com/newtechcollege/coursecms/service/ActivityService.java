@@ -1,41 +1,19 @@
 package com.newtechcollege.coursecms.service;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import com.newtechcollege.coursecms.dao.ActivityMapper;
 import com.newtechcollege.coursecms.entity.Discover;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class ActivityService {
+public interface ActivityService {
+    public List<Discover> select() ;
 
-    @Resource
-    private ActivityMapper activityMapper;  
+    public Discover getOne(int id) ;
 
-    public List<Discover> select() {
-        return activityMapper.select();
-    }
+    public int add(Discover discover) ;
 
-    public Discover getOne(int id) {
-        return activityMapper.getActivityById(id);
-    }
+    public int edit(Discover discover);
 
-    public int add(Discover discover) {
-        return activityMapper.insert(discover);
-    }
+    public int delete(int id) ;
 
-    public int edit(Discover discover) {
-        return activityMapper.update(discover);
-    }
-
-    public int delete(int id) {
-        return activityMapper.delete(id);
-    }
-
-    public int publish(int id,int status) {
-        return activityMapper.publish(id,status);
-    }
+    public int publish(int id,int status) ;
 }

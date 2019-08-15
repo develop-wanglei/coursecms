@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.coursecms.dao.TeacherMapper">
+<!--查询教师列表-->
+    <select id="selectTeacherAll" resultType="com.newtechcollege.coursecms.entity.Teacher">
+        SELECT * FROM teacher WHERE teacherstatus != -1
+    </select>
+<!--查询教师详情-->
+    <select id="selectTeacherById" resultType="com.newtechcollege.coursecms.entity.Teacher">
+        SELECT * FROM teacher WHERE teacherid= #{arg0}
+    </select>
+<!--教师姓名模糊查询-->
+    <select id="selectTeacherLike" resultType="com.newtechcollege.coursecms.entity.Teacher">
+        SELECT * FROM teacher WHERE teachername LIKE #{arg0}
+    </select>
+<!--    新增教师-->
+<insert id="insertTeacher" parameterType="com.newtechcollege.coursecms.entity.Teacher">
+    INSERT INTO teacher_account(teachername,teacherpro,teacherdetail,teacherimgsrc,teacherstatus) VALUES(teachername,teacherpro,teacherdetail,teacherimgsrc,0)
+</insert>
+</mapper>

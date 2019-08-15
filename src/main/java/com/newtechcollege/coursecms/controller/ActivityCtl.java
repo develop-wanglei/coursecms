@@ -3,11 +3,9 @@ package com.newtechcollege.coursecms.controller;
 import java.io.FileInputStream;
 import java.util.List;
 import java.util.UUID;
-
 import com.newtechcollege.coursecms.entity.Discover;
-import com.newtechcollege.coursecms.service.ActivityService;
+import com.newtechcollege.coursecms.service.Impl.ActivityServiceImpl;
 import com.newtechcollege.coursecms.util.QiniuUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ActivityCtl {
 
     @Autowired
-    private ActivityService activityService;
+    private ActivityServiceImpl activityService;
     /**
      * 活动列表
      * @return []
