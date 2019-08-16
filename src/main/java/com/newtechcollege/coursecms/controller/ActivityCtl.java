@@ -31,6 +31,15 @@ public class ActivityCtl {
         return activityService.select();
     }
 
+    /**
+     * 搜索列表
+     * @return []
+     */
+    @RequestMapping(value = "/search")
+    public List<Discover> search(String title) {
+        return activityService.search(title);
+    }
+
      /**
      * 查询单条活动
      * @return {}

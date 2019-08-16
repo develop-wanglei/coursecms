@@ -20,8 +20,11 @@
         id, title
     </sql>
     <select id="select" resultMap="BaseResultMap">
-        select * from discover order by  id desc 
-    </select> 
+        select * from discover where status != -1  order by  id desc 
+    </select>
+    <select id="search" resultMap="BaseResultMap">
+        select * from discover where title like "%"#{title}"%"
+    </select>  
     <select id="getActivityById" resultType="com.newtechcollege.coursecms.entity.Discover">
         select * from discover where id = #{id}
     </select> 

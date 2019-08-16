@@ -19,6 +19,10 @@ public class ActivityService {
         return activityMapper.select();
     }
 
+    public List<Discover> search(String title) {
+        return activityMapper.search(title);
+    }
+
     public Discover getOne(int id) {
         return activityMapper.getActivityById(id);
     }

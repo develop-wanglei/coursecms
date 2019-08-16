@@ -11,6 +11,8 @@ public interface  ActivityMapper {
 
     List<Discover> select();
 
+    List<Discover> search(String title);
+
     Discover getActivityById(int id);
 
     int insert(Discover discover);
