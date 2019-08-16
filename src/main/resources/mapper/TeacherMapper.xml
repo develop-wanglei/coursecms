@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.coursecms.dao.TeacherMapper">
+<!--查询教师列表-->
+    <select id="selectTeacherAll" resultType="com.newtechcollege.coursecms.entity.Teacher">
+        SELECT * FROM teacher WHERE teacherstatus != -1
+    </select>
+<!--查询教师详情-->
+    <select id="selectTeacherById" resultType="com.newtechcollege.coursecms.entity.Teacher">
+        SELECT * FROM teacher WHERE teacherid= #{arg0}
+    </select>
+<!--教师姓名模糊查询-->
+    <select id="selectTeacherLike" resultType="com.newtechcollege.coursecms.entity.Teacher">
+        SELECT * FROM teacher WHERE teachername LIKE #{arg0}
+    </select>
+<!--    新增教师-->
+<insert id="insertTeacher" parameterType="com.newtechcollege.coursecms.entity.Teacher">
+    INSERT INTO teacher_account(teachername,teacherpro,teacherdetail,teacherimgsrc,teacherstatus) VALUES(teachername,teacherpro,teacherdetail,teacherimgsrc,0)
+</insert>
+<!--    删除教师-->
+    <update id="deleteTeacherById">
+        UPDATE teacher SET teacherstatus = -1 WHERE teacherid=#{arg0}
+    </update>
+<!--    修改教师是否展示-->
+    <update id="updataTeacherStatusById">
+        UPDATE teacher SET teacherstatus =#{teacherstatus} WHERE teacherid=#{teacherid}
+    </update>
+<!--    修改教师信息-->
+    <update id="updataTeacher">
+        UPDATE teacher SET teachername=#{teachername},teacherpro=#{teacherpro},teacherdetail=#{teacherdetail} WHERE teacherid=#{id}
+    </update>
+<!--    修改教师头像-->
+    <update id="updataTeacherImg">
+        UPDATE teacher SET teacherimgsrc=#{teacherImg} WHERE teacherid=#{id}
+    </update>
+</mapper>

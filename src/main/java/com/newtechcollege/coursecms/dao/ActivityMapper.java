@@ -6,6 +6,10 @@ import com.newtechcollege.coursecms.entity.Discover;
 
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * 
+ * 活动Mapper接口 
+ */
 @Mapper
 public interface  ActivityMapper {
 
