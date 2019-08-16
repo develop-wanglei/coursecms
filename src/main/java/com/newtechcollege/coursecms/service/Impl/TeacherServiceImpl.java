@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 
  * 教师业务逻辑实现接口类
-  * @param null : 
+  * @param :
   * @return : null
  * @author wanglei
  * @date 2019/8/15 17:43
@@ -41,5 +41,25 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Integer insertTeacher(Teacher teacher) {
         return teacherMapper.insertTeacher(teacher);
+    }
+
+    @Override
+    public Integer deleteTeacherById(Integer teacherId) {
+        return teacherMapper.deleteTeacherById(teacherId);
+    }
+
+    @Override
+    public Integer updataTeacherStatusById(Integer teacherid, Integer teacherstatus) {
+        return teacherMapper.updataTeacherStatusById(teacherid,teacherstatus);
+    }
+
+    @Override
+    public Integer updataTeacher(Integer id, Teacher teacher) {
+        return teacherMapper.updataTeacher(id,teacher);
+    }
+
+    @Override
+    public Integer updataTeacherImg(Integer id, String teacherImg) {
+        return teacherMapper.updataTeacherImg(id,teacherImg);
     }
 }

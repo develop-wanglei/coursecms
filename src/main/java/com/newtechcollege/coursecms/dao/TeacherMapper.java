@@ -19,4 +19,8 @@ public interface TeacherMapper {
     Teacher selectTeacherById(int teacherid);
     List<Teacher> selectTeacherLike(String teacherlikename);
     Integer insertTeacher(Teacher teacher);
+    Integer deleteTeacherById(Integer teacherId);
+    Integer updataTeacherStatusById(Integer teacherid,Integer teacherstatus);
+    Integer updataTeacher(Integer id,Teacher teacher);
+    Integer updataTeacherImg(Integer id,String teacherImg);
 }
