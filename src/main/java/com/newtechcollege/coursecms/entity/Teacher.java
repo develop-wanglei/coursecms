@@ -15,11 +15,12 @@ public class Teacher {
     private String teacherdetail;
     private String teacherimgsrc;
     private int teacherstatus;
+    private String time;
 
     public Teacher() {
     }
 
-    public Teacher(int teacherid, int userid, String teachername, String teacherpro, String teacherdetail, String teacherimgsrc, int teacherstatus) {
+    public Teacher(int teacherid, int userid, String teachername, String teacherpro, String teacherdetail, String teacherimgsrc, int teacherstatus, String time) {
         this.teacherid = teacherid;
         this.userid = userid;
         this.teachername = teachername;
@@ -27,6 +28,7 @@ public class Teacher {
         this.teacherdetail = teacherdetail;
         this.teacherimgsrc = teacherimgsrc;
         this.teacherstatus = teacherstatus;
+        this.time = time;
     }
 
     public int getTeacherid() {
@@ -85,6 +87,14 @@ public class Teacher {
         this.teacherstatus = teacherstatus;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
@@ -95,6 +105,7 @@ public class Teacher {
                 ", teacherdetail='" + teacherdetail + '\'' +
                 ", teacherimgsrc='" + teacherimgsrc + '\'' +
                 ", teacherstatus=" + teacherstatus +
+                ", time='" + time + '\'' +
                 '}';
     }
 }

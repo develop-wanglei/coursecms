@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.coursecms.dao.User_course_videoMapper">
+    <select id="selectUserCourse" resultType="com.newtechcollege.coursecms.entity.Course">
+        select c.* from user u left join user_course uc on u.id=uc.user_id left join course c on c.courseid=uc.course_id where u.id=#{userid}
+    </select>
+    <select id="selectUserVideo" resultType="com.newtechcollege.coursecms.entity.Video">
+        select v.*,uv.progress from user u left join user_video uv on u.id=uv.user_id left join video v on v.videoid=uv.video_id left join course c on c.courseid=v.course_id  where u.id=#{userid}
+    </select>
+    <select id="selectUser" resultType="com.newtechcollege.coursecms.entity.User">
+        select * from user where id=#{userid}
+    </select>
+</mapper>

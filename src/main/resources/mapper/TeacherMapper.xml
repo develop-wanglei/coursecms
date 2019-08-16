@@ -23,7 +23,7 @@
     </update>
 <!--    修改教师是否展示-->
     <update id="updataTeacherStatusById">
-        UPDATE teacher SET teacherstatus =#{teacherstatus} WHERE teacherid=#{teacherid}
+        UPDATE teacher SET teacherstatus =#{teacherstatus},time=now() WHERE teacherid=#{teacherid}
     </update>
 <!--    修改教师信息-->
     <update id="updataTeacher">
