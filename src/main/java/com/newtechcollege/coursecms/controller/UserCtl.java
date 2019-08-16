@@ -13,7 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
+/**
+ * 
+ * 用户控制层 
+  * @return : null
+ * @author wanglei
+ * @date 2019/8/16 17:22
+ */
 @RestController
 @RequestMapping(value = "/user",method = RequestMethod.POST)
 public class UserCtl {

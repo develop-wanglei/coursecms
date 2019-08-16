@@ -1,0 +1,16 @@
+package com.newtechcollege.coursecms.service;
+
+import com.newtechcollege.coursecms.entity.User;
+
+import java.util.List;
+/**
+ * 
+ * 用户业务逻辑接口 
+  * @return : null
+ * @author wanglei
+ * @date 2019/8/16 20:12
+ */
+public interface UserService {
+    List<User> selectUser();
+    List<User> selectUserWechat();
+}
