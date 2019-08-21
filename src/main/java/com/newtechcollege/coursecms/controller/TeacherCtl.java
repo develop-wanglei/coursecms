@@ -88,7 +88,7 @@ public class TeacherCtl {
     public int updata(Integer teacherid,Teacher teacher){
        return teacherService.updataTeacher(teacherid,teacher);
     }
-    /**
+       /**
      * 修改教师头像
      */
     @RequestMapping(value = "/updateTeacherImg",method = RequestMethod.POST)

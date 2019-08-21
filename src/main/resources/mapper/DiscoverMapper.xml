@@ -59,7 +59,8 @@
     <update id="publish" parameterType="com.newtechcollege.coursecms.entity.Discover">
         update discover
         <set>
-            status = #{status}
+            status = #{status},
+            time = now() 
         </set>
         where id=#{id}
     </update>
