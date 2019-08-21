@@ -131,7 +131,7 @@ public class TeacherCtl {
            return RestfulUtil.success(integer);
        }
     }
-    /**
+       /**
      * 修改教师头像
      */
     @RequestMapping(value = "/updateTeacherImg",method = RequestMethod.POST)
