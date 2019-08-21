@@ -15,7 +15,7 @@
     </select>
 <!--    新增教师-->
 <insert id="insertTeacher" parameterType="com.newtechcollege.coursecms.entity.Teacher">
-    INSERT INTO teacher_account(teachername,teacherpro,teacherdetail,teacherimgsrc,teacherstatus) VALUES(teachername,teacherpro,teacherdetail,teacherimgsrc,0)
+    INSERT INTO teacher(teachername,teacherpro,teacherdetail,teacherimgsrc,teacherstatus) VALUES(teachername,teacherpro,teacherdetail,teacherimgsrc,0)
 </insert>
 <!--    删除教师-->
     <update id="deleteTeacherById">

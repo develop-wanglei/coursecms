@@ -1,4 +1,7 @@
 package com.newtechcollege.coursecms.entity;
+
+import javax.validation.constraints.NotEmpty;
+
 /**
  *
  * 教师实体类
@@ -10,9 +13,13 @@ package com.newtechcollege.coursecms.entity;
 public class Teacher {
     private int teacherid;
     private int userid;
+    @NotEmpty(message="名字不能为空")
     private String teachername;
+    @NotEmpty(message = "介绍不能为空")
     private String teacherpro;
+    @NotEmpty(message = "详情不能为空")
     private String teacherdetail;
+    @NotEmpty(message = "照片不能为空")
     private String teacherimgsrc;
     private int teacherstatus;
     private String time;
