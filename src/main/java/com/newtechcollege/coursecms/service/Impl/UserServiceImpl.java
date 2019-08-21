@@ -29,4 +29,15 @@ public class UserServiceImpl implements UserService {
     public List<User> selectUserWechat() {
         return userMapper.selectUserWechat();
     }
+
+    @Override
+    public List<User> selectLikeName(String likename) {
+        likename="%"+likename+"%";
+        return userMapper.selectLikeName(likename);
+    }
+
+    @Override
+    public Integer updateStatus(Integer status, Integer userid) {
+        return userMapper.updateStatus(status,userid);
+    }
 }

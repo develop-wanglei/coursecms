@@ -17,5 +17,6 @@ public interface UserMapper {
 
     List<User> selectUser();
     List<User> selectUserWechat();
-    
+    List<User> selectLikeName(String likename);
+    Integer updateStatus(Integer status,Integer userid);
 }
