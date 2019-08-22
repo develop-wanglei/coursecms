@@ -15,7 +15,6 @@
     </select>
 <!--    新增教师-->
 <insert id="insertTeacher" parameterType="com.newtechcollege.coursecms.entity.Teacher">
-<<<<<<< HEAD
     INSERT INTO teacher(
             teachername,
             teacherpro,
@@ -27,9 +26,6 @@
             #{teacherdetail,jdbcType=VARCHAR},
             #{teacherimgsrc,jdbcType=VARCHAR}
         )
-=======
-    INSERT INTO teacher(teachername,teacherpro,teacherdetail,teacherimgsrc,teacherstatus) VALUES(teachername,teacherpro,teacherdetail,teacherimgsrc,0)
->>>>>>> f856ed576e2290af5fc90cebfb6c0d7415c36d96
 </insert>
 <!--    删除教师-->
     <update id="deleteTeacherById">

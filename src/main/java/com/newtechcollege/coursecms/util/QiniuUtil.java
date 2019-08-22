@@ -5,11 +5,12 @@ import java.io.FileInputStream;
 import com.google.gson.Gson;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
-import org.springframework.stereotype.Component;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+
+import org.springframework.stereotype.Component;
 
 @Component
 public class QiniuUtil {

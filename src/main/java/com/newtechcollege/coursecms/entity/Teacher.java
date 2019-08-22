@@ -1,10 +1,6 @@
 package com.newtechcollege.coursecms.entity;
 
-<<<<<<< HEAD
 import javax.validation.constraints.NotNull;
-=======
-import javax.validation.constraints.NotEmpty;
->>>>>>> f856ed576e2290af5fc90cebfb6c0d7415c36d96
 
 /**
  *
@@ -18,7 +14,6 @@ import javax.validation.constraints.NotEmpty;
 public class Teacher {
     private int teacherid;
     private int userid;
-<<<<<<< HEAD
     @NotNull(message = "teachername 字段缺失或为空")
     private String teachername;
     @NotNull(message = "teacherpro 字段缺失或为空")
@@ -26,15 +21,6 @@ public class Teacher {
     @NotNull(message = "teacherdetail 字段缺失或为空")
     private String teacherdetail;
     @NotNull(message = "teacherimgsrc 字段缺失或为空")
-=======
-    @NotEmpty(message="名字不能为空")
-    private String teachername;
-    @NotEmpty(message = "介绍不能为空")
-    private String teacherpro;
-    @NotEmpty(message = "详情不能为空")
-    private String teacherdetail;
-    @NotEmpty(message = "照片不能为空")
->>>>>>> f856ed576e2290af5fc90cebfb6c0d7415c36d96
     private String teacherimgsrc;
     private int teacherstatus;
     private String time;

@@ -1,17 +1,19 @@
 package com.newtechcollege.coursecms.controller;
 
-<<<<<<< HEAD
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.newtechcollege.coursecms.annotation.validate.PostiveInt;
 import com.newtechcollege.coursecms.entity.Teacher;
 import com.newtechcollege.coursecms.service.TeacherService;
 import com.newtechcollege.coursecms.util.QiniuUtil;
+import com.newtechcollege.coursecms.util.RestfulUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -21,28 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-=======
-import com.alibaba.fastjson.JSONObject;
-import com.newtechcollege.coursecms.entity.Teacher;
-import com.newtechcollege.coursecms.service.TeacherService;
-import com.newtechcollege.coursecms.util.QiniuUtil;
-import com.newtechcollege.coursecms.util.RestfulUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
->>>>>>> f856ed576e2290af5fc90cebfb6c0d7415c36d96
 /**
  * 
  * 教师控制层api
@@ -119,22 +99,20 @@ public class TeacherCtl {
     /**
      * 修改教师信息
      */
-    @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
-<<<<<<< HEAD
+    // @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
     public int updata(@PostiveInt Integer teacherid) {
         int i = 1/0;
         return 1;
     //    return teacherService.updataTeacher(teacher);
-=======
-    public String updata(@NotNull(message = "teacherid不能为空") Integer teacherid, @Valid Teacher teacher, BindingResult bindingResult){
-       if (bindingResult.hasErrors()){
-           return RestfulUtil.error(1,bindingResult.getFieldError().getDefaultMessage());
-       }else {
-           Integer integer = teacherService.updataTeacher(teacherid, teacher);
-           return RestfulUtil.success(integer);
-       }
->>>>>>> f856ed576e2290af5fc90cebfb6c0d7415c36d96
     }
+    // public String updata(@NotNull(message = "teacherid不能为空") Integer teacherid, @Valid Teacher teacher, BindingResult bindingResult){
+    //    if (bindingResult.hasErrors()){
+    //        return RestfulUtil.error(1,bindingResult.getFieldError().getDefaultMessage());
+    //    }else {
+    //        Integer integer = teacherService.updataTeacher(teacherid, teacher);
+    //        return RestfulUtil.success(integer);
+    //    }
+    // }
        /**
      * 修改教师头像
      */

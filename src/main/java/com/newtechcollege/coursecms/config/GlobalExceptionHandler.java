@@ -14,8 +14,6 @@ import java.lang.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
-// import org.springframework.validation.BindException;
-// import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-     @Resource
-     private ErrMapper errMapper;  
+     // @Resource
+     // private ErrMapper errMapper;  
 
      private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
@@ -56,7 +54,7 @@ public class GlobalExceptionHandler {
                 //存储到数据库
                 ErrException err =  new ErrException();
                 err.setErrmsg(ex.getClass().toString());
-                errMapper.insert(err);   
+               //  errMapper.insert(err);   
  
                 //返回给客户端
                 r.setMsg("服务器错误,请稍后再试");   
