@@ -1,7 +1,11 @@
 package com.newtechcollege.coursecms.entity;
+
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * 教师实体类
+ * 
  * @return
  * @author wanglei
  * @creed: Talk is cheap,show me the code
@@ -10,9 +14,13 @@ package com.newtechcollege.coursecms.entity;
 public class Teacher {
     private int teacherid;
     private int userid;
+    @NotNull(message = "teachername 字段缺失或为空")
     private String teachername;
+    @NotNull(message = "teacherpro 字段缺失或为空")
     private String teacherpro;
+    @NotNull(message = "teacherdetail 字段缺失或为空")
     private String teacherdetail;
+    @NotNull(message = "teacherimgsrc 字段缺失或为空")
     private String teacherimgsrc;
     private int teacherstatus;
     private String time;

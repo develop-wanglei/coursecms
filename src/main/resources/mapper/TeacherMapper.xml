@@ -15,7 +15,17 @@
     </select>
 <!--    新增教师-->
 <insert id="insertTeacher" parameterType="com.newtechcollege.coursecms.entity.Teacher">
-    INSERT INTO teacher_account(teachername,teacherpro,teacherdetail,teacherimgsrc,teacherstatus) VALUES(teachername,teacherpro,teacherdetail,teacherimgsrc,0)
+    INSERT INTO teacher(
+            teachername,
+            teacherpro,
+            teacherdetail,
+            teacherimgsrc
+        ) VALUES(
+            #{teachername,jdbcType=VARCHAR},
+            #{teacherpro,jdbcType=VARCHAR},
+            #{teacherdetail,jdbcType=VARCHAR},
+            #{teacherimgsrc,jdbcType=VARCHAR}
+        )
 </insert>
 <!--    删除教师-->
     <update id="deleteTeacherById">
@@ -27,7 +37,12 @@
     </update>
 <!--    修改教师信息-->
     <update id="updataTeacher">
-        UPDATE teacher SET teachername=#{teachername},teacherpro=#{teacherpro},teacherdetail=#{teacherdetail} WHERE teacherid=#{id}
+        UPDATE teacher SET
+         teachername=#{teachername},
+         teacherpro=#{teacherpro},
+         teacherdetail=#{teacherdetail},
+         teacherimgsrc=#{teacherimgsrc}
+        WHERE teacherid=#{teacherid}
     </update>
 <!--    修改教师头像-->
     <update id="updataTeacherImg">

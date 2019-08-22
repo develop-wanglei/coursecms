@@ -1,16 +1,25 @@
 package com.newtechcollege.coursecms.controller;
 
-import com.newtechcollege.coursecms.entity.Teacher;
-import com.newtechcollege.coursecms.service.TeacherService;
-import com.newtechcollege.coursecms.util.QiniuUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+
+import javax.validation.Valid;
+
+import com.newtechcollege.coursecms.annotation.validate.PostiveInt;
+import com.newtechcollege.coursecms.entity.Teacher;
+import com.newtechcollege.coursecms.service.TeacherService;
+import com.newtechcollege.coursecms.util.QiniuUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 /**
  * 
  * 教师控制层api
@@ -20,6 +29,7 @@ import java.util.UUID;
  */
 @RestController
 @CrossOrigin(origins = "*")
+@Validated
 @RequestMapping(value = "/teacher")
 public class TeacherCtl {
 
@@ -54,7 +64,7 @@ public class TeacherCtl {
      *新增教师
      */
     @RequestMapping(value = "/insert")
-    public int insertTeacher(Teacher teacher){
+    public int insertTeacher(@Valid Teacher teacher){
         Integer integer = teacherService.insertTeacher(teacher);
         return integer;
     }
@@ -68,7 +78,7 @@ public class TeacherCtl {
     /**
      * 教师头像上传
      */
-    @RequestMapping(value = "/teacherUpload",method = RequestMethod.POST)
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public String upload(@RequestParam(value = "file") MultipartFile file) throws IOException {
         FileInputStream inputStream = (FileInputStream) file.getInputStream();
         String pathUrl = QiniuUtil.uploadImg(inputStream, UUID.randomUUID().toString().substring(0, 8));
@@ -85,8 +95,10 @@ public class TeacherCtl {
      * 修改教师信息
      */
     @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
-    public int updata(Integer teacherid,Teacher teacher){
-       return teacherService.updataTeacher(teacherid,teacher);
+    public int updata(@PostiveInt Integer teacherid) {
+        int i = 1/0;
+        return 1;
+    //    return teacherService.updataTeacher(teacher);
     }
        /**
      * 修改教师头像

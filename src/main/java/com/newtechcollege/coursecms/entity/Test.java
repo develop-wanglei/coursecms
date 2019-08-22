@@ -1,7 +1,9 @@
 package com.newtechcollege.coursecms.entity;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.newtechcollege.coursecms.annotation.validate.Phone;
 
 /**
  * @author hy
@@ -13,7 +15,7 @@ public class Test
 
     private String phone;
 
-    @NotNull(message = "name不能为空")
+    @NotEmpty(message = "name不能为空")
     private String name;
 
     @NotNull(message = "age不能为null")

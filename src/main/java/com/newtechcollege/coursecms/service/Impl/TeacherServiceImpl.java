@@ -54,8 +54,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Integer updataTeacher(Integer id, Teacher teacher) {
-        return teacherMapper.updataTeacher(id,teacher);
+    public Integer updataTeacher(Teacher teacher) {
+        return teacherMapper.updataTeacher(teacher);
     }
 
     @Override

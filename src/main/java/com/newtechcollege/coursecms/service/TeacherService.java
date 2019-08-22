@@ -19,6 +19,6 @@ public interface TeacherService {
     Integer insertTeacher(Teacher teacher);
     Integer deleteTeacherById(Integer teacherId);
     Integer updataTeacherStatusById(Integer teacherid,Integer teacherstatus);
-    Integer updataTeacher(Integer id,Teacher teacher);
+    Integer updataTeacher(Teacher teacher);
     Integer updataTeacherImg(Integer id,String teacherImg);
 }
