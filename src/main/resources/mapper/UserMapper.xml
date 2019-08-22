@@ -14,7 +14,7 @@
         SELECT * FROM user WHERE name LIKE #{likename} OR nick_name LIKE #{likename}
     </select>
 <!--    修改用户状态-->
-    <select id="updateStatus">
+    <update id="updateStatus">
         UPDATE user SET status=#{status} WHERE id=#{userid}
-    </select>
+    </update>
 </mapper>

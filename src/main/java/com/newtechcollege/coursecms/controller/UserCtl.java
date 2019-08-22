@@ -130,8 +130,13 @@ public class UserCtl {
        JSONObject json = new JSONObject();
        if (status !=null && userid !=null){
            Integer integer = userService.updateStatus(status, userid);
-           json.put("code",1);
-           json.put("data",integer);
+           if(integer>0){
+               json.put("code",1);
+               json.put("info","修改成功");
+           }else {
+               json.put("code",0);
+               json.put("info","修改失败");
+           }
        }else {
            json.put("code",0);
            json.put("info","传入数值为空");
