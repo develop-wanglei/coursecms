@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,10 +44,31 @@ public class UserCtl {
             List<Course> course = user_course_videoService.selectUserCourse(userid);
             List<Video> video = user_course_videoService.selectUserVideo(userid);
             User user = user_course_videoService.selectUser(userid);
-            user.setCourse(course);
-            user.setVideo(video);
-            json.put("code",1);
-            json.put("data",user);
+            if ( user!=null) {
+                List<Video> list = new ArrayList<>();
+                int count = 0;
+                if (course.size()>1 && video.size()>1){
+                for (Course c : course) {
+                    for (Video v : video) {
+                        if (c.getCourseid() == v.getCourse_id()) {
+                            list.add(v);
+                        }
+                        count++;
+                    }
+                    if (count <= video.size()) {
+                        c.setVideo(list);
+                    }
+                }
+                if (course.size() > 0) {
+                    user.setCourse(course);
+                }
+            }
+                json.put("code",1);
+                json.put("data",user);
+            }else {
+                json.put("code",0);
+                json.put("info","未查到数据");
+            }
             return json.toString();
         }else {
             json.put("code",0);

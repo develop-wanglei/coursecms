@@ -1,4 +1,8 @@
 package com.newtechcollege.coursecms.entity;
+
+
+import java.util.List;
+
 /**
  *
  * 课程实体类
@@ -15,11 +19,12 @@ public class Course {
     private String imgsrc;
     private Integer coursestatus;
     private Double price;
+    private List<Video> video;
 
     public Course() {
     }
 
-    public Course(Integer courseid, Integer teacher_id, Integer major_id, String coursename, String coursedesc, String imgsrc, Integer coursestatus, Double price) {
+    public Course(List<Video> video,Integer courseid, Integer teacher_id, Integer major_id, String coursename, String coursedesc, String imgsrc, Integer coursestatus, Double price) {
         this.courseid = courseid;
         this.teacher_id = teacher_id;
         this.major_id = major_id;
@@ -28,6 +33,7 @@ public class Course {
         this.imgsrc = imgsrc;
         this.coursestatus = coursestatus;
         this.price = price;
+        this.video=video;
     }
 
     public Integer getCourseid() {
@@ -94,6 +100,14 @@ public class Course {
         this.price = price;
     }
 
+    public List<Video> getVideo() {
+        return video;
+    }
+
+    public void setVideo(List<Video> video) {
+        this.video = video;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -105,6 +119,7 @@ public class Course {
                 ", imgsrc='" + imgsrc + '\'' +
                 ", coursestatus=" + coursestatus +
                 ", price=" + price +
+                ", video=" + video +
                 '}';
     }
 }

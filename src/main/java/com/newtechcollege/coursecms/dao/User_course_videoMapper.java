@@ -20,5 +20,6 @@ public interface User_course_videoMapper {
     List<Course> selectUserCourse(Integer userid);
     List<Video> selectUserVideo(Integer userid);
     User selectUser(Integer userid);
+    List<User> selectGood(Integer id);
 
 }

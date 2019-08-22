@@ -32,11 +32,11 @@ public class User {
     private String userpic;
     private Integer status;
     private List<Course> course;
-    private List<Video> video;
+
     public User() {
     }
 
-    public User(Integer id, String openid, String name, String nick_name, Long mobile, String email, String password, String sex, String school, String academy, String major, String position, String work_year, String address, Integer role, Integer create_time, String userpic, Integer status, List<Course> course, List<Video> video) {
+    public User(Integer id, String openid, String name, String nick_name, Long mobile, String email, String password, String sex, String school, String academy, String major, String position, String work_year, String address, Integer role, Integer create_time, String userpic, Integer status, List<Course> course) {
         this.id = id;
         this.openid = openid;
         this.name = name;
@@ -56,7 +56,6 @@ public class User {
         this.userpic = userpic;
         this.status = status;
         this.course = course;
-        this.video = video;
     }
 
     public Integer getId() {
@@ -211,13 +210,6 @@ public class User {
         this.course = course;
     }
 
-    public List<Video> getVideo() {
-        return video;
-    }
-
-    public void setVideo(List<Video> video) {
-        this.video = video;
-    }
 
     @Override
     public String toString() {
@@ -241,7 +233,6 @@ public class User {
                 ", userpic='" + userpic + '\'' +
                 ", status=" + status +
                 ", course=" + course +
-                ", video=" + video +
                 '}';
     }
 }

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import com.newtechcollege.coursecms.annotation.validate.PostiveInt;
 import com.newtechcollege.coursecms.entity.Teacher;
+import com.newtechcollege.coursecms.myexception.MyException;
 import com.newtechcollege.coursecms.service.TeacherService;
 import com.newtechcollege.coursecms.util.QiniuUtil;
 import com.newtechcollege.coursecms.util.RestfulUtil;
@@ -37,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = "/teacher")
 public class TeacherCtl {
 
+
     @Autowired
     private TeacherService teacherService;
 
@@ -46,22 +48,31 @@ public class TeacherCtl {
     @RequestMapping(value = "/select")
     public List selectAll(){
         List<Teacher> list = teacherService.selectTeacherAll();
+        if(list == null){
+            throw new MyException("没有数据");
+        }
         return list;
     }
     /**
      * 教师详情接口
      */
     @RequestMapping(value = "/details")
-    public String teacherById(@NotNull(message = "teacherid不能为空！") Integer teacherid){
+    public Teacher teacherById(@NotNull(message = "teacherid不能为空！") Integer teacherid){
             Teacher teacher = teacherService.selectTeacherById(teacherid);
-            return RestfulUtil.success(teacher);
+            if (teacher == null){
+                throw new MyException("没有查询到数据");
+            }
+            return teacher;
     }
     /**
      * 教师姓名模糊查询
      */
     @RequestMapping(value = "/like")
-    public List teacherLike(String likename){
+    public List teacherLike(@NotBlank(message = "likename不能为空") String likename){
         List<Teacher> list = teacherService.selectTeacherLike(likename);
+        if (list == null){
+            throw new MyException("没有查询到数据");
+        }
         return list;
         }
         /**
@@ -71,6 +82,9 @@ public class TeacherCtl {
     @RequestMapping(value = "/insert")
     public int insertTeacher(@Valid Teacher teacher){
         Integer integer = teacherService.insertTeacher(teacher);
+        if (integer !=1){
+            throw new MyException("新增失败");
+        }
         return integer;
     }
     /**
@@ -78,7 +92,11 @@ public class TeacherCtl {
      */
     @RequestMapping(value = "/delete")
     public int deleteTeacher(@NotNull(message = "teacherid不能为空") Integer teacherid){
-        return teacherService.deleteTeacherById(teacherid);
+        Integer integer = teacherService.deleteTeacherById(teacherid);
+        if (integer !=1){
+            throw new MyException("删除失败");
+        }
+        return integer;
     }
     /**
      * 教师头像上传
@@ -94,30 +112,34 @@ public class TeacherCtl {
      */
     @RequestMapping(value = "/updateTeacherStatus")
     public int status(@NotNull(message = "teacherid不能为空") Integer teacherid,@NotNull(message = "status不能为空") Integer status){
-        return teacherService.updataTeacherStatusById(teacherid,status);
+        Integer integer = teacherService.updataTeacherStatusById(teacherid, status);
+        if (integer!=1){
+            throw new MyException("修改失败");
+        }
+        return integer;
     }
     /**
      * 修改教师信息
      */
-    // @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
-    public int updata(@PostiveInt Integer teacherid) {
-        int i = 1/0;
-        return 1;
-    //    return teacherService.updataTeacher(teacher);
+    @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
+    public int updata(@PostiveInt Integer teacherid,@Valid Teacher teacher) {
+        Integer integer = teacherService.updataTeacher(teacherid, teacher);
+        if (integer!=1){
+            throw new MyException("修改教师信息失败");
+        }
+        return integer;
+
     }
-    // public String updata(@NotNull(message = "teacherid不能为空") Integer teacherid, @Valid Teacher teacher, BindingResult bindingResult){
-    //    if (bindingResult.hasErrors()){
-    //        return RestfulUtil.error(1,bindingResult.getFieldError().getDefaultMessage());
-    //    }else {
-    //        Integer integer = teacherService.updataTeacher(teacherid, teacher);
-    //        return RestfulUtil.success(integer);
-    //    }
-    // }
        /**
      * 修改教师头像
      */
     @RequestMapping(value = "/updateTeacherImg",method = RequestMethod.POST)
     public int updataImg(@NotNull(message = "teacherid不能为空") Integer teacherid,@NotBlank(message = "teacherimgsrc不能为空") String teacherimgsrc){
-        return teacherService.updataTeacherImg(teacherid,teacherimgsrc);
+
+        int res = teacherService.updataTeacherImg(teacherid,teacherimgsrc);
+        if(res != 1){
+            throw  new MyException("修改教师失败");
+        }
+        return res;
     }
 }

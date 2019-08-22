@@ -5,12 +5,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Email;
 
 import com.newtechcollege.coursecms.annotation.validate.PostiveInt;
+import com.newtechcollege.coursecms.dao.UserMapper;
+import com.newtechcollege.coursecms.dao.User_course_videoMapper;
+import com.newtechcollege.coursecms.entity.User;
 import com.newtechcollege.coursecms.myexception.ParameterException;
 
+import com.newtechcollege.coursecms.util.RestfulUtil;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -41,6 +47,13 @@ public class TestCtl {
     public Boolean validate(@PostiveInt(message = "参数不合法") Integer id){
 
         return true;
+    }
+    @Resource
+    private User_course_videoMapper userMpper;
+    @RequestMapping(value = "/testUser")
+    public String user(Integer id){
+        List<User> users = userMpper.selectGood(id);
+        return RestfulUtil.success(users);
     }
   
 }
