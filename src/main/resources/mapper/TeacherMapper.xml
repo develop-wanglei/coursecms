@@ -7,11 +7,11 @@
     </select>
 <!--查询教师详情-->
     <select id="selectTeacherById" resultType="com.newtechcollege.coursecms.entity.Teacher">
-        SELECT * FROM teacher WHERE teacherid= #{arg0}
+        SELECT * FROM teacher WHERE teacherid= #{arg0} and teacherstatus != -1
     </select>
 <!--教师姓名模糊查询-->
     <select id="selectTeacherLike" resultType="com.newtechcollege.coursecms.entity.Teacher">
-        SELECT * FROM teacher WHERE teachername LIKE #{arg0}
+        SELECT * FROM teacher WHERE teachername LIKE #{arg0} and teacherstatus != -1
     </select>
 <!--    新增教师-->
 <insert id="insertTeacher" parameterType="com.newtechcollege.coursecms.entity.Teacher">

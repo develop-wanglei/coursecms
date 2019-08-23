@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-     // @Resource
-     // private ErrMapper errMapper;  
+     @Resource
+     private ErrMapper errMapper;  
 
      private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
@@ -53,8 +53,8 @@ public class GlobalExceptionHandler {
            }else{
                 //存储到数据库
                 ErrException err =  new ErrException();
-                err.setErrmsg(ex.getClass().toString());
-               //  errMapper.insert(err);   
+                err.setErrmsg(ex.getMessage());
+                errMapper.insert(err);   
  
                 //返回给客户端
                 r.setMsg("服务器错误,请稍后再试");   

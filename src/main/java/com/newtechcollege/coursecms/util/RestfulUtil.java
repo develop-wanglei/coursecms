@@ -3,17 +3,44 @@ package com.newtechcollege.coursecms.util;
 import com.alibaba.fastjson.JSONObject;
 
 
+/**
+ * 定义客户端成功返回结果
+ */
 public  class  RestfulUtil {
-    public static String success(Object obj){
+
+    /**
+	 * 成功默认返回 2xx
+	 */
+	private Integer code = 200;
+	/**
+	 * 返回数据或信息
+	 */
+    private String data = "success ok";
+    
+
+    public static String json(Object obj){
+       
+        RestfulUtil restfulUtil = new RestfulUtil();
+
         JSONObject json = new JSONObject();
-            json.put("code",0);
-            json.put("data",obj);
+        json.put("code",restfulUtil.code);
+        if(obj == null){
+            obj = restfulUtil.data;
+        }
+        json.put("data",obj);
         return json.toString();
     }
-    public static String error(Integer code,String msg){
-        JSONObject json = new JSONObject();
-        json.put("code",code);
-        json.put("msg",msg);
-        return json.toString();
+
+    /**
+     * @return the code
+     */
+    public Integer getCode() {
+        return code;
+    }
+    /**
+     * @param code the code to set
+     */
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

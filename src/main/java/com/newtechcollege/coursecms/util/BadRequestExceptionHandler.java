@@ -40,6 +40,6 @@ public class BadRequestExceptionHandler {
             e=result.getFieldError().getDefaultMessage();
 
         }
-        return RestfulUtil.error(1,e);
+        return "";
     }
 }

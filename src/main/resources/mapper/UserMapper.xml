@@ -3,11 +3,11 @@
 <mapper namespace="com.newtechcollege.coursecms.dao.UserMapper">
 <!--    查询所有用户-->
     <select id="selectUser" resultType="com.newtechcollege.coursecms.entity.User">
-        SELECT * FROM user
+        SELECT * FROM user where status != -1
     </select>
 <!--    查询微信用户-->
     <select id="selectUserWechat" resultType="com.newtechcollege.coursecms.entity.User">
-        SELECT * FROM user WHERE name IS  NULL
+        SELECT * FROM user WHERE name IS  NULL and status != -1
     </select>
 <!--    模糊查询姓名-->
     <select id="selectLikeName" resultType="com.newtechcollege.coursecms.entity.User">
@@ -15,6 +15,6 @@
     </select>
 <!--    修改用户状态-->
     <update id="updateStatus">
-        UPDATE user SET status=#{status} WHERE id=#{userid}
+        UPDATE user SET status=#{status} WHERE id=#{userid} 
     </update>
 </mapper>
