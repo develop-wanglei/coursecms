@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.newtechcollege.coursecms.dao.User_course_videoMapper">
+    <resultMap id="user_course_video" type="com.newtechcollege.coursecms.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="openid" property="openid" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nick_name" jdbcType="VARCHAR"/>
+        <collection property="course" ofType="com.newtechcollege.coursecms.entity.Course">
+            <id column="courseid" property="courseid" jdbcType="INTEGER"/>
+            <result column="teacher_id" property="teacher_id" jdbcType="INTEGER"/>
+            <result column="major_id" property="major_id" jdbcType="INTEGER"/>
+            <result column="coursename" property="coursename" jdbcType="VARCHAR"/>
+            <result column="coursedesc" property="coursedesc" jdbcType="VARCHAR"/>
+            <result column="imgsrc" property="imgsrc" jdbcType="VARCHAR"/>
+            <result column="coursestatus" property="coursestatus" jdbcType="INTEGER"/>
+            <collection property="video" ofType="com.newtechcollege.coursecms.entity.Video">
+                <id column="videoid" property="videoid" jdbcType="INTEGER"/>
+                <result column="videoname" property="videoname" jdbcType="VARCHAR"/>
+                <result column="videourl" property="videourl" jdbcType="VARCHAR"/>
+                <result column="videoduration" property="videoduration" jdbcType="VARCHAR"/>
+            </collection>
+        </collection>
+    </resultMap>
     <select id="selectUserCourse" resultType="com.newtechcollege.coursecms.entity.Course">
         select c.* from user u left join user_course uc on u.id=uc.user_id left join course c on c.courseid=uc.course_id where u.id=#{userid}
     </select>
@@ -9,5 +30,12 @@
     </select>
     <select id="selectUser" resultType="com.newtechcollege.coursecms.entity.User">
         select * from user where id=#{userid}
+    </select>
+    <select id="selectGood" resultMap="user_course_video">
+        select * from user u
+        left join  user_video uv on u.id=uv.user_id
+        left join video v on uv.video_id=v.videoid
+        left join user_course uc on uc.user_id=u.id
+        left join course c on uc.course_id=c.courseid where u.id=#{id}
     </select>
 </mapper>

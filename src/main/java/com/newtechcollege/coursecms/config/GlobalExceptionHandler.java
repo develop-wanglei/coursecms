@@ -37,24 +37,22 @@ public class GlobalExceptionHandler {
            r.setCode(500);
            
            //获取异常类型
-           String class_ex = ex.getClass().toString();
-           String str_ex = "";
-           if(ex.getClass() != null){
-                    String exe[] = class_ex.split("\\.");
-                    str_ex = exe[exe.length - 1];
-           }
+        String class_ex = ex.getClass().toString();
+        String str_ex = "";
+        if(ex.getClass() != null){
+            String exe[] = class_ex.split("\\.");
+            str_ex = exe[exe.length - 1];
+        }
            
            if("MethodArgumentTypeMismatchException".equals(str_ex)){//参数类型错误
                 r.setMsg("参数类型错误"); 
-                r.setErrcode(Code.ERRORCODE_0);
-           }else if("ArithmeticException".equals(str_ex)){
-                r.setMsg("算数错误"); 
                 r.setErrcode(Code.ERRORCODE_0);
            }else{
                 //存储到数据库
                 ErrException err =  new ErrException();
                 err.setErrmsg(ex.getMessage());
                 errMapper.insert(err);   
+
  
                 //返回给客户端
                 r.setMsg("服务器错误,请稍后再试");   

@@ -42,7 +42,7 @@
          teacherpro=#{teacherpro},
          teacherdetail=#{teacherdetail},
          teacherimgsrc=#{teacherimgsrc}
-        WHERE teacherid=#{teacherid}
+        WHERE teacherid=#{id}
     </update>
 <!--    修改教师头像-->
     <update id="updataTeacherImg">

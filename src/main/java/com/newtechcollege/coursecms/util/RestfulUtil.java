@@ -43,4 +43,5 @@ public  class  RestfulUtil {
     public void setCode(Integer code) {
         this.code = code;
     }
+
 }
