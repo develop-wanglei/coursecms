@@ -1,19 +1,26 @@
 package com.newtechcollege.coursecms.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import com.alibaba.fastjson.JSONObject;
 import com.newtechcollege.coursecms.entity.Course;
 import com.newtechcollege.coursecms.entity.User;
 import com.newtechcollege.coursecms.entity.Video;
+import com.newtechcollege.coursecms.myexception.MyException;
 import com.newtechcollege.coursecms.service.UserService;
 import com.newtechcollege.coursecms.service.User_course_videoService;
+import com.newtechcollege.coursecms.util.RestfulUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -23,7 +30,9 @@ import java.util.List;
  * @date 2019/8/16 17:22
  */
 @RestController
-@RequestMapping(value = "/user",method = RequestMethod.POST)
+@Validated
+@CrossOrigin(origins = "*")
+@RequestMapping(value = "/user")
 public class UserCtl {
 
     @Autowired
@@ -78,42 +87,47 @@ public class UserCtl {
     }
 
     /**
-     * 查看所有用户，微信用户和所有用户
-     * @param title
+     * 所有用户列表,微信用户列表
+     * @param type
      * @return
      */
-    @RequestMapping(value ="/selectUser",method = RequestMethod.POST)
-    public String user(String title){
-        JSONObject json = new JSONObject();
-        if(!"".equals(title)){
-            if ("wx".equals(title)){
-                List<User> wechat = userService.selectUserWechat();
-                if (wechat!=null){
-                    json.put("code",1);
-                    json.put("data",wechat);
-                    json.put("info","微信用户");
-                }else {
-                    json.put("code",0);
-                    json.put("info","查询数据出现错误");
-                }
-                return json.toString();
-            }else {
-                List<User> users = userService.selectUser();
-                if (users!=null){
-                    json.put("code",1);
-                    json.put("data",users);
-                    json.put("info","所有用户");
-                }else {
-                    json.put("code",0);
-                    json.put("info","查询数据出现错误");
-                }
-                return json.toString();
-            }
-        }else {
-            json.put("code",0);
-            json.put("info","传入title为空");
-            return json.toString();
+    @RequestMapping(value ="/list")
+    public String list(@NotNull(message = "type 字段缺失") String type){
+
+        List<User> list;
+
+        if("wx".equals(type)){//查询微信用户列表
+            list = userService.selectUserWechat();
+        }else if("all".equals(type)){//查询所有用户列表
+            list = userService.selectUser();
+        }else{
+            throw new MyException("参数错误");
         }
+        if(list == null){
+            throw new MyException("用户信息不存在");
+        }
+
+        return RestfulUtil.json(list);
+   }
+   /**
+     * 用户总数,微信用户总数
+     * @return
+     */
+    @RequestMapping(value ="/sum")
+    public String sum(){
+
+        List<User> user= userService.selectUser();
+        List<User> wx= userService.selectUserWechat();
+        
+        if(user == null || wx == null){
+            throw new MyException("用户信息不存在");
+        }
+
+        JSONObject json = new JSONObject();
+        json.put("userSum", user.size());
+        json.put("wechatSum", wx.size());
+
+        return RestfulUtil.json(json);
    }
 
     /**
@@ -121,24 +135,12 @@ public class UserCtl {
      * @param likename
      * @return
      */
-   @RequestMapping(value = "/likeName",method = RequestMethod.POST)
-    public String likename(String likename){
-        JSONObject json = new JSONObject();
-        if(!"".equals(likename)){
-            List<User> likeName = userService.selectLikeName(likename);
-            if (likeName!=null){
-                json.put("code",1);
-                json.put("data",likeName);
-            }else {
-                json.put("code",0);
-                json.put("info","查询数据出现错误");
-            }
-            return json.toString();
-        }else {
-            json.put("code",0);
-            json.put("info","传入参数为空");
-            return json.toString();
-        }
+   @RequestMapping(value = "/search")
+    public String search(@NotNull(message = "缺失likename字段") String likename){
+
+        List<User> list = userService.selectLikeName(likename);
+        return RestfulUtil.json(list);
+
    }
 
     /**
@@ -147,23 +149,18 @@ public class UserCtl {
      * @param userid
      * @return
      */
-   @RequestMapping(value = "/updateStatus",method = RequestMethod.POST)
-    public String status(Integer status,Integer userid){
-       JSONObject json = new JSONObject();
-       if (status !=null && userid !=null){
-           Integer integer = userService.updateStatus(status, userid);
-           if(integer>0){
-               json.put("code",1);
-               json.put("info","修改成功");
-           }else {
-               json.put("code",0);
-               json.put("info","修改失败");
-           }
-       }else {
-           json.put("code",0);
-           json.put("info","传入数值为空");
+   @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public String status(@NotNull(message = "type字段 缺失或者为空") String type,@NotNull(message = "userid字段 缺失或者为空") Integer userid){
+       Integer status = 0;
+       if("delete".equals(type)){
+            status = -1;
        }
-       return json.toString();
+       Integer res = userService.updateStatus( status , userid );
+       if(res != 1){
+            throw new MyException("删除失败");
+       }
+         
+       return RestfulUtil.json(res);
    }
 
 }

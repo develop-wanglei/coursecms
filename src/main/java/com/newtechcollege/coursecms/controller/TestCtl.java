@@ -53,7 +53,7 @@ public class TestCtl {
     @RequestMapping(value = "/testUser")
     public String user(Integer id){
         List<User> users = userMpper.selectGood(id);
-        return RestfulUtil.success(users);
+        return RestfulUtil.json(users);
     }
   
 }

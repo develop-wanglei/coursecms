@@ -59,22 +59,23 @@ public class TeacherCtl {
     @RequestMapping(value = "/details")
     public Teacher teacherById(@NotNull(message = "teacherid不能为空！") Integer teacherid){
             Teacher teacher = teacherService.selectTeacherById(teacherid);
-            if (teacher == null){
-                throw new MyException("没有查询到数据");
+            if(teacher == null){
+                throw new MyException("没有记录");
+
             }
             return teacher;
     }
     /**
      * 教师姓名模糊查询
      */
-    @RequestMapping(value = "/like")
-    public List teacherLike(@NotBlank(message = "likename不能为空") String likename){
+    @RequestMapping(value = "/search")
+    public List teacherLike(@NotNull(message = "teacherid不能为空")String likename){
         List<Teacher> list = teacherService.selectTeacherLike(likename);
-        if (list == null){
-            throw new MyException("没有查询到数据");
-        }
+        if(list == null){
+            throw new MyException("没有记录");
+        }   
         return list;
-        }
+   }
         /**
      *新增教师
      */
@@ -128,7 +129,6 @@ public class TeacherCtl {
             throw new MyException("修改教师信息失败");
         }
         return integer;
-
     }
        /**
      * 修改教师头像
