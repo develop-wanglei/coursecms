@@ -50,6 +50,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Integer insertAdmin(Admin admin) {
+        admin.setPassword(md5Util.getMD5(admin.getPassword()));
         return adminMapper.insertAdmin(admin);
     }
 

@@ -1,6 +1,7 @@
 package com.newtechcollege.coursecms.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.newtechcollege.coursecms.myexception.MyException;
 import io.jsonwebtoken.*;
 
 import java.util.Date;
@@ -66,9 +67,15 @@ public class Jwt {
      * @return
      */
     private static Jws<Claims> getJws(String token, String encryKey) {
-        return Jwts.parser()
-                .setSigningKey(encryKey)
-                .parseClaimsJws(token);
+        Jws<Claims> jws = null;
+        try {
+            jws = Jwts.parser()
+                    .setSigningKey(encryKey)
+                    .parseClaimsJws(token);
+        }catch (final MalformedJwtException e){
+//            throw new MyException("token过期或失效");
+        }
+        return jws;
     }
 
     public static String getSignature(String token, String encryKey) {

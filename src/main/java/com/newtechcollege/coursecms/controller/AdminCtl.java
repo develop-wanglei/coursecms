@@ -7,11 +7,11 @@ import com.newtechcollege.coursecms.service.AdminService;
 import com.newtechcollege.coursecms.util.Jwt;
 import com.newtechcollege.coursecms.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +27,7 @@ import java.util.Map;
  * @author wanglei
  * @date 2019/8/24 10:49
  */
-@Controller
+@RestController
 @CrossOrigin(origins = "*")
 @Validated
 @RequestMapping(value = "/admin")

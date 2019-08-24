@@ -11,6 +11,7 @@ import com.newtechcollege.coursecms.util.Code;
 import com.newtechcollege.coursecms.util.Response;
 import java.lang.*;
 
+import io.jsonwebtoken.MalformedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -35,7 +36,6 @@ public class GlobalExceptionHandler {
     public Response<String> ExceptionErrorHandler(Exception ex) throws Exception {
            Response<String> r = new Response<>();
            r.setCode(500);
-           
            //获取异常类型
         String class_ex = ex.getClass().toString();
         String str_ex = "";
@@ -43,19 +43,21 @@ public class GlobalExceptionHandler {
             String exe[] = class_ex.split("\\.");
             str_ex = exe[exe.length - 1];
         }
-           
            if("MethodArgumentTypeMismatchException".equals(str_ex)){//参数类型错误
-                r.setMsg("参数类型错误"); 
+                r.setMsg("参数类型错误");
                 r.setErrcode(Code.ERRORCODE_0);
+           }else if("MalformedJwtException".equals(str_ex)){
+               r.setMsg("token过期或无效");
+               r.setErrcode(Code.ERRORCODE_0);
            }else{
                 //存储到数据库
                 ErrException err =  new ErrException();
                 err.setErrmsg(ex.getMessage());
-                errMapper.insert(err);   
+                errMapper.insert(err);
 
- 
+
                 //返回给客户端
-                r.setMsg("服务器错误,请稍后再试");   
+                r.setMsg("服务器错误,请稍后再试");
                 r.setErrcode(Code.ERRORCODE_0);
            }
 
@@ -74,6 +76,18 @@ public class GlobalExceptionHandler {
             r.setErrcode(Code.ERRORCODE_0);
            return r;
      }
+    /**
+     * token
+     */
+    @ExceptionHandler(value = MalformedJwtException.class)
+    @ResponseBody
+    public Response<String> malExceptionErrorHandler(MalformedJwtException ex) throws Exception {
+        Response<String> r = new Response<>();
+        r.setCode(400);
+        r.setMsg("token过期或失效");
+        r.setErrcode(Code.ERRORCODE_0);
+        return r;
+    }
     
      /**
      * 自定义单个参数验证错误异常返回
@@ -100,7 +114,7 @@ public class GlobalExceptionHandler {
         Response<String> r = new Response<>();
         r.setCode(ex.getCode());
         r.setMsg(ex.getMsg());
-        r.setErrcode(ex.getErrcode());;
+        r.setErrcode(ex.getErrcode());
         return r;
     }
 
