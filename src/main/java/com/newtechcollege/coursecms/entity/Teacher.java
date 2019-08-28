@@ -1,5 +1,6 @@
 package com.newtechcollege.coursecms.entity;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,13 +15,13 @@ import javax.validation.constraints.NotNull;
 public class Teacher {
     private int teacherid;
     private int userid;
-    @NotNull(message = "teachername 字段缺失或为空")
+    @NotBlank(message = "teachername 字段缺失或为空")
     private String teachername;
-    @NotNull(message = "teacherpro 字段缺失或为空")
+    @NotBlank(message = "teacherpro 字段缺失或为空")
     private String teacherpro;
-    @NotNull(message = "teacherdetail 字段缺失或为空")
+    @NotBlank(message = "teacherdetail 字段缺失或为空")
     private String teacherdetail;
-    @NotNull(message = "teacherimgsrc 字段缺失或为空")
+    @NotBlank(message = "teacherimgsrc 字段缺失或为空")
     private String teacherimgsrc;
     private int teacherstatus;
     private String time;
