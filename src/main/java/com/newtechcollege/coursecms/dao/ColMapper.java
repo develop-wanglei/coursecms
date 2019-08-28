@@ -3,26 +3,26 @@ package com.newtechcollege.coursecms.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.newtechcollege.coursecms.entity.School;
+import com.newtechcollege.coursecms.entity.Col;
 
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 
- * 实训基地Mapper接口 
+ * 实习基地Mapper接口 
  */
 @Mapper
-public interface  SchoolMapper {
+public interface  ColMapper {
 
     List<Map<String,Object>> list();
 
     List<Map<String,Object>> search(String title);
 
-    Map<String,Object> getSchoolById(int id);
+    Map<String,Object> getColById(int id);
 
-    int insert(School school);
+    int insert(Col col);
 
-    int update(School school);
+    int update(Col col);
 
     int delete(int id);
 

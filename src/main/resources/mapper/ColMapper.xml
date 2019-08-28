@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.coursecms.dao.ColMapper">
+
+
+    <resultMap type="java.util.HashMap" id="colMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="imgsrc" property="imgsrc"/>
+		<result column="business" property="business"/>
+		<result column="logo" property="logo"/>
+		<result column="cid" property="cid"/>
+		<result column="create_time" property="create_time"/> 
+        <result column="update_time" property="update_time"/> 
+	    <result column="status" property="status"/>
+        
+		<association property="city" select="getCity" column="cid" javaType="City">
+		</association>
+
+		<collection property="imgs"  select="getImgs" ofType="Img" column="id">
+		</collection>
+
+	</resultMap>
+	<resultMap type="com.newtechcollege.coursecms.entity.City" id="cityMap">
+			<id column="id" property="id"/>
+			<result column="city_name" property="city_name"/>
+	</resultMap>
+	<resultMap type="java.util.HashMap" id="imgMap">
+			<id column="id" property="id"/>
+			<result column="imgsrc" property="imgsrc"/>
+			<result column="img_title" property="img_title"/>
+	</resultMap>
+
+
+	<!-- 获取实训基地所在城市信息 -->
+    <select id="getCity" resultMap="cityMap" parameterType="int">
+		SELECT
+			c.id,
+			c.city_name
+		FROM city c 
+		where c.id = #{cid}
+	</select>
+	<!-- 获取实训基地图片信息 -->
+	<select id="getImgs" resultMap="imgMap" parameterType="int">
+			SELECT
+				i.id,
+				i.img_title
+			FROM img i 
+			where i.cid = #{id}
+	</select>
+
+
+	<!-- 查询 -->
+
+    <!--查询实习基地列表-->
+    <select id="list" resultMap="colMap">
+        SELECT
+			id,
+			name,
+			imgsrc,
+			business,
+			logo,
+			cid,
+			create_time,
+			update_time,
+            status
+		FROM
+			col   
+		WHERE 
+			status != -1
+	</select>
+	<!--搜索实习基地-->
+    <select id="search" resultMap="colMap" >
+		SELECT
+			id,
+			name,
+			imgsrc,
+			business,
+			logo,
+			cid,
+			create_time,
+			update_time,
+            status
+		FROM
+			col   
+		WHERE 
+			name like "%"#{title}"%" and status != -1
+	</select>
+	<!--实习基地详情-->
+    <select id="getColById" resultMap="colMap" >
+		SELECT
+			id,
+			name,
+			imgsrc,
+			business,
+			logo,
+			cid,
+			create_time,
+			update_time,
+            status
+		FROM
+			col   
+		WHERE   
+			id = #{id} and status != -1
+	</select>
+
+	<!-- 操作数据库 -->
+
+	<!-- 删除操作 -->
+	<update id="delete" >
+			update col
+			<set>
+				status = -1
+			</set>
+			where id=#{id}
+	</update>
+	
+	<!-- 发布实习基地操作 -->
+	<update id="publish" >
+			update col
+			<set>
+				status = 1,
+				create_time = now()
+			</set>
+			where id=#{id}
+	</update>
+
+</mapper>

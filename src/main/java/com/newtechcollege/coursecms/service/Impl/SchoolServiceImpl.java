@@ -1,6 +1,7 @@
 package com.newtechcollege.coursecms.service.Impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,17 +18,17 @@ public class SchoolServiceImpl implements SchoolService {
     private SchoolMapper schoolMapper;  
 
     @Override
-    public List<School> select() {
-        return schoolMapper.select();
+    public List<Map<String,Object>> list() {
+        return schoolMapper.list();
     }
 
     @Override
-    public List<School> search(String title) {
+    public List<Map<String,Object>> search(String title) {
         return schoolMapper.search(title);
     }
 
     @Override
-    public School getOne(int id) {
+    public Map<String,Object> getOne(int id) {
         return schoolMapper.getSchoolById(id);
     }
 
@@ -47,7 +48,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public int publish(int id,int status) {
-        return schoolMapper.publish(id,status);
+    public int publish(int id) {
+        return schoolMapper.publish(id);
     }
 }

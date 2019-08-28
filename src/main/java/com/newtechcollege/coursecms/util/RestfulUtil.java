@@ -1,5 +1,6 @@
 package com.newtechcollege.coursecms.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 
@@ -27,7 +28,7 @@ public  class  RestfulUtil {
         if(obj == null){
             obj = restfulUtil.data;
         }
-        json.put("data",obj);
+        json.put("data",JSON.toJSON(obj));
         return json.toString();
     }
 

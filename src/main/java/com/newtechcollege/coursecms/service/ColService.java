@@ -3,18 +3,18 @@ package com.newtechcollege.coursecms.service;
 import java.util.List;
 import java.util.Map;
 
-import com.newtechcollege.coursecms.entity.School;
+import com.newtechcollege.coursecms.entity.Col;
 
-public interface SchoolService {
+public interface ColService {
      List<Map<String,Object>> list();
 
      Map<String,Object> getOne(int id);
 
      List<Map<String,Object>> search(String title) ;
 
-     int add(School school);
+     int add(Col col);
 
-     int edit(School school);
+     int edit(Col col);
 
      int delete(int id) ;
 

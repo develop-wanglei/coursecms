@@ -1,5 +1,7 @@
 package com.newtechcollege.coursecms.entity;
 
+import java.util.List;
+
 /**
  * School 实训基地类
  */
@@ -8,9 +10,61 @@ public class School {
 	private String name;
 	private String imgsrc;
 	private String cid;
-	private String imgId;
+	private String create_time;
+	private String update_time;
 	private String status;
-	
+	private City city;
+	private List<Img> img;
+
+	/**
+	 * @return the create_time
+	 */
+	public String getCreate_time() {
+		return create_time;
+	}
+	/**
+	 * @param create_time the create_time to set
+	 */
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
+	}
+	/**
+	 * @return the update_time
+	 */
+	public String getUpdate_time() {
+		return update_time;
+	}
+	/**
+	 * @param update_time the update_time to set
+	 */
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
+	/**
+	 * @return the img
+	 */
+	public List<Img> getImg() {
+		return img;
+	}
+	/**
+	 * @param img the img to set
+	 */
+	public void setImg(List<Img> img) {
+		this.img = img;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public City getCity() {
+		return city;
+	}
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(City city) {
+		this.city = city;
+	}
 	/**
 	 * @return the cid
 	 */
@@ -58,18 +112,6 @@ public class School {
 	 * @param imgsrc the imgsrc to set
 	 */
 	public void setImgsrc(String imgsrc) {
-		this.imgsrc = imgsrc;
-	}
-	/**
-	 * @return the imgsrc
-	 */
-	public String getImgId() {
-		return imgsrc;
-	}
-	/**
-	 * @param imgsrc the imgsrc to set
-	 */
-	public void setImgId(String imgsrc) {
 		this.imgsrc = imgsrc;
 	}
 	/**

@@ -7,9 +7,48 @@ public class Img {
 	private int id;
 	private String imgsrc;
 	private String img_title;
-	private String aid;
+	private Integer aid;
+	private Integer sid;
 	private String status;
-	
+	private School school;
+	private Col col;
+
+	/**
+	 * @return the col
+	 */
+	public Col getCol() {
+		return col;
+	}
+	/**
+	 * @param col the col to set
+	 */
+	public void setCol(Col col) {
+		this.col = col;
+	}
+	/**
+	 * @return the school
+	 */
+	public School getSchool() {
+		return school;
+	}
+	/**
+	 * @param school the school to set
+	 */
+	public void setSchool(School school) {
+		this.school = school;
+	}
+	/**
+	 * @return the sid
+	 */
+	public Integer getSid() {
+		return sid;
+	}
+	/**
+	 * @param sid the sid to set
+	 */
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
 	/**
 	 * @return the id
 	 */
@@ -45,18 +84,6 @@ public class Img {
 	 */
 	public void setImg_title(String img_title) {
 		this.img_title = img_title;
-	}
-	/**
-	 * @return the aid
-	 */
-	public String getAid() {
-		return aid;
-	}
-	/**
-	 * @param aid the aid to set
-	 */
-	public void setAid(String aid) {
-		this.aid = aid;
 	}
 	/**
 	 * @return the status

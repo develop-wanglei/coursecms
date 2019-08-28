@@ -1,5 +1,7 @@
 package com.newtechcollege.coursecms.entity;
 
+import java.util.List;
+
 /**
  * City 城市类
  */
@@ -7,21 +9,34 @@ public class City {
 	private int id;
 	private String city_name;
 	private String status;
-	private School school;
+	private List<School> school;
+	private List<Col> col;
+
+	/**
+	 * @return the col
+	 */
+	public List<Col> getCol() {
+		return col;
+	}
+	/**
+	 * @param col the col to set
+	 */
+	public void setCol(List<Col> col) {
+		this.col = col;
+	}
 
 	/**
 	 * @return the school
 	 */
-	public School getSchool() {
+	public List<School> getSchool() {
 		return school;
 	}
 	/**
 	 * @param school the school to set
 	 */
-	public void setSchool(School school) {
+	public void setSchool(List<School> school) {
 		this.school = school;
 	}
-	
 	/**
 	 * @return the id
 	 */
