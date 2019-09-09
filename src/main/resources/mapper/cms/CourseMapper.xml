@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.cms.dao.CourseMapper">
+
+
+    <resultMap type="java.util.HashMap" id="CourseMap">
+		<id column="courseid" property="courseid"/>
+		<result column="teacher_id" property="teacher_id"/>
+		<result column="major_id" property="major_id"/>
+		<result column="type_id" property="type_id"/>
+
+		<association property="teacher" javaType="Teacher" >
+			<id column="teacherid" property="teacherid"/>
+			<id column="teachername" property="teachername"/>
+			<id column="teacherimgsrc" property="teacherimgsrc"/>
+		</association>
+		<association property="major" javaType="Major" >
+			<id column="majorid" property="majorid"/>
+			<result column="majorname" property="majorname"/>
+			<result column="majorimgsrc" property="majorimgsrc"/>
+		</association>
+		<association property="courseType" javaType="CourseType" >
+			<id column="id" property="id"/>
+			<result column="name" property="name"/>
+		</association>
+
+		<collection property="chapter"  select="getChapters" ofType="Chapter" column="courseid">
+
+		</collection>
+
+	</resultMap>
+	<select id="getChapters" resultMap="chapterMap" parameterType="int">
+			SELECT
+				*
+			FROM chapter
+			where course_id = #{courseid}
+	</select>
+	<select id="getVideos" resultMap="videoMap" parameterType="int">
+			SELECT
+				*
+			FROM video
+			where chapter_id = #{chapter_id}
+	</select>
+	<resultMap type="java.util.HashMap" id="chapterMap">
+		<id column="chapter_id" property="chapter_id"/>
+		<result column="chaptername" property="chaptername"/>
+		<collection property="video" select="getVideos" ofType="Video" column="chapter_id"></collection>
+	</resultMap>
+	<resultMap type="java.util.HashMap" id="videoMap">
+		<id column="videoid" property="videoid"/>
+		<result column="videoname" property="videoname"/>
+	</resultMap>
+	<resultMap type="java.util.HashMap" id="selectOne">
+		<id column="courseid" property="courseid"/>
+	</resultMap>
+
+	<!-- 查询条件 -->
+	<sql id="query_course_where">
+			c.teacher_id = t.teacherid and
+			c.major_id = m.majorid and
+			c.type_id = ct.id and
+			c.status != -1
+	</sql>
+	<sql id="mutitable">
+			course  c ,teacher t,major m,course_type ct
+	</sql>
+    <!--查询包含外键关系课程列表-->
+    <select id="list" resultMap="CourseMap">
+        SELECT
+			*
+		FROM
+			<include refid="mutitable"></include>
+		WHERE
+		    <include refid="query_course_where"></include>
+
+	</select>
+	<!--查询程列表-->
+	<select id="all" resultType="Course">
+		SELECT * FROM course  WHERE status != -1
+	</select>
+	<!--查询程列表-->
+	<select id="search" resultType="Course">
+		SELECT * FROM course
+		WHERE
+		<include refid="query_course_where_multiple"></include>
+	</select>
+	<sql id="query_course_where_multiple">
+			<if test="majorid != null and majorid !=''">
+				major_id = #{majorid} and
+			</if>
+			<if test="teacherid != null and teacherid !=''">
+				teacher_id = #{teacherid} and
+			</if>
+			<if test="title !=null and title !=''">
+				coursename like "%"#{title}"%" and
+			</if>
+		    status != -1
+	</sql>
+
+	<!--课程详情-->
+	<select id="getCourseById" resultMap="selectOne">
+		SELECT
+			courseid,coursename,teacher_id,major_id,type_id,price,imgsrc,coursedesc
+		FROM
+			course
+		WHERE
+		    courseid = #{id} and status != -1
+
+	</select>
+
+	<!-- 操作数据库 -->
+
+	<!-- 删除课程操作 -->
+	<update id="delete" >
+		update course
+		<set>
+			   status = -1
+		</set>
+		where courseid=#{id}
+	</update>
+
+	<!-- 发布课程操作 -->
+	<update id="publish" >
+		update course
+		<set>
+			status = 1,
+			create_time = now()
+		</set>
+		where courseid=#{id}
+	</update>
+
+    <!-- 新增教师信息  -->
+    <insert id="insertTeacher"  keyProperty="teacherid">
+		INSERT INTO teacher(teachername )
+		VALUES(
+            #{teachername}
+        )
+<!--        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="teacherid">-->
+<!--            SELECT LAST_INSERT_ID()-->
+<!--        </selectKey>-->
+	</insert>
+
+
+    <!-- 新增课程操作 -->
+	<insert id="insert" >
+		INSERT INTO course(
+            coursename,
+            teacher_id,
+            major_id,
+            coursedesc,
+            imgsrc,
+            price,
+            create_time
+        ) VALUES(
+            #{coursename,jdbcType=VARCHAR},
+            #{teacher_id,jdbcType=INTEGER},
+            #{major_id,jdbcType=INTEGER},
+            #{coursedesc,jdbcType=VARCHAR},
+            #{imgsrc,jdbcType=VARCHAR},
+            #{price,jdbcType=DECIMAL},
+            now()
+        )
+	</insert>
+
+	<!--  修改课程信息-->
+	<update id="update">
+        UPDATE course SET
+         coursename=#{coursename},
+         teacher_id=#{teacher_id},
+         major_id=#{major_id},
+         coursedesc=#{coursedesc},
+         imgsrc=#{imgsrc},
+         price=#{price},
+         update_time=now()
+        WHERE courseid=#{courseid}
+    </update>
+
+	<!-- 上传课程图片操作 -->
+	<update id="upload" >
+		update course
+		<set>
+			imgsrc = #{path}
+		</set>
+		where courseid=#{id}
+	</update>
+
+</mapper>

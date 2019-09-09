@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.cms.dao.ChapterMapper">
+
+	<resultMap type="java.util.HashMap" id="chapterMap">
+		<id column="chapterid" property="chapterid"/>
+	</resultMap>
+
+	<!--查章节列表-->
+	<select id="list" resultMap="chapterMap">
+		SELECT * FROM chapter  WHERE status != -1
+	</select>
+	<!--搜索-->
+	<select id="search" resultMap="chapterMap">
+		SELECT * FROM chapter
+		WHERE
+		<include refid="query_chapter_where_multiple"></include>
+	</select>
+	<sql id="query_chapter_where_multiple">
+			<if test="courseid != null and courseid !=''">
+				course_id = #{courseid} and
+			</if>
+			<if test="title !=null and title !=''">
+				chaptername like "%"#{title}"%" and
+			</if>
+		    status != -1
+	</sql>
+
+	<!--课程详情-->
+	<select id="getChapterById" resultMap="chapterMap">
+		SELECT
+			chapter_id,course_id,chaptername,status
+		FROM
+			chapter
+		WHERE
+		    chapter_id = #{id} and status != -1
+
+	</select>
+
+	<!-- 操作数据库 -->
+
+	<!-- 删除课程操作 -->
+	<update id="delete" >
+		update chapter
+		<set>
+			   status = -1
+		</set>
+		where chapter_id=#{id}
+	</update>
+
+	<!-- 发布课程操作 -->
+	<update id="publish" >
+		update chapter
+		<set>
+			status = 1,
+			create_time = now()
+		</set>
+		where chapter_id=#{id}
+	</update>
+
+	<!-- 新增章节操作 -->
+	<insert id="insert" >
+		INSERT INTO chapter(
+            chaptername,
+            course_id,
+            create_time
+        ) VALUES(
+            #{chaptername,jdbcType=VARCHAR},
+            #{course_id,jdbcType=INTEGER},
+            now()
+        )
+	</insert>
+
+	<!--  修改章节信息-->
+	<update id="update">
+        UPDATE chapter SET
+         chaptername=#{chaptername,jdbcType=VARCHAR},
+         course_id=#{course_id,jdbcType=INTEGER},
+         update_time=now()
+        WHERE chapter_id=#{chapter_id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.cms.dao.VideoMapper">
+
+	<resultMap type="java.util.HashMap" id="videoMap">
+		<id column="videoid" property="videoid"/>
+	</resultMap>
+
+	<!--查视频列表-->
+	<select id="list" resultMap="videoMap">
+		SELECT * FROM video  WHERE status != -1
+	</select>
+	<!--搜索-->
+	<select id="search" resultMap="videoMap">
+		SELECT * FROM video
+		WHERE
+		<include refid="query_video_where_multiple"></include>
+	</select>
+	<sql id="query_video_where_multiple">
+			<if test="courseid != null and courseid !=''">
+				course_id = #{courseid} and
+			</if>
+			<if test="chapterid != null and chapterid !=''">
+				chapter_id = #{chapterid} and
+			</if>
+			<if test="title !=null and title !=''">
+				videoname like "%"#{title}"%" and
+			</if>
+		    status != -1
+	</sql>
+
+	<!--课程详情-->
+	<select id="getVideoById" resultMap="videoMap">
+		SELECT
+			videoid,course_id,chapter_id,videoname,videourl,status
+		FROM
+			video
+		WHERE
+		    videoid = #{id} and status != -1
+
+	</select>
+
+	<!-- 操作数据库 -->
+
+	<!-- 删除课程操作 -->
+	<update id="delete" >
+		update video
+		<set>
+			   status = -1
+		</set>
+		where videoid=#{id}
+	</update>
+
+	<!-- 发布课程操作 -->
+	<update id="publish" >
+		update video
+		<set>
+			status = 1,
+			create_time = now()
+		</set>
+		where videoid=#{id}
+	</update>
+
+	<!-- 新增视频操作 -->
+	<insert id="insert" >
+		INSERT INTO video(
+			videoname,
+            chapter_id,
+            course_id,
+            videourl,
+--             videoduration,视屏总时长
+            create_time
+        ) VALUES(
+            #{videoname,jdbcType=VARCHAR},
+            #{chapter_id,jdbcType=INTEGER},
+            #{course_id,jdbcType=INTEGER},
+            #{videourl,jdbcType=VARCHAR},
+            now()
+        )
+	</insert>
+
+	<!--  修改视频信息-->
+	<update id="update">
+        UPDATE video SET
+         videoname=#{videoname,jdbcType=VARCHAR},
+         chapter_id=#{chapter_id,jdbcType=INTEGER},
+         course_id=#{course_id,jdbcType=INTEGER},
+         videourl=#{videourl,jdbcType=VARCHAR},
+         update_time=now()
+        WHERE videoid=#{videoid}
+    </update>
+
+	<!-- 上传视频操作 -->
+	<update id="upload" >
+		update video
+		<set>
+			videourl = #{path}
+		</set>
+		where videoid=#{id}
+	</update>
+
+
+</mapper>

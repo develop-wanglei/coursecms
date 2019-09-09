@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.cms.dao.MajorMapper">
+
+
+    <resultMap type="java.util.HashMap" id="majorMap">
+		<id column="majorid" property="majorid"/>
+		<result column="majorname" property="majorname"/>
+		<result column="majorimgsrc" property="majorimgsrc"/>
+		<result column="majorstatus" property="majorstatus"/>
+	</resultMap>
+
+    <!--查询专业列表-->
+    <select id="list" resultMap="majorMap">
+        SELECT * FROM major WHERE majorstatus != -1
+	</select>
+
+	<!--专业详情-->
+	<select id="getMajorById" resultMap="majorMap">
+        SELECT * FROM major WHERE  majorid = #{id}
+	</select>
+
+	<!--搜索专业-->
+	<select id="search" resultMap="majorMap" >
+		SELECT * from major WHERE majorname like "%"#{title}"%" and majorstatus != -1
+	</select>
+
+	<!-- 操作数据库 -->
+
+	<!-- 删除专业操作 -->
+	<update id="delete" >
+		update major
+		<set>
+			majorstatus = -1
+		</set>
+		where majorid=#{id}
+	</update>
+
+	<!-- 发布专业操作 -->
+	<update id="publish" >
+		update major
+		<set>
+			majorstatus = 1,
+			create_time = now()
+		</set>
+		where majorid=#{id}
+	</update>
+
+	<!-- 新增专业操作 -->
+	<insert id="insert" >
+		INSERT INTO major(
+            majorname,
+            majorimgsrc,
+            create_time
+        ) VALUES(
+            #{majorname,jdbcType=VARCHAR},
+            #{majorimgsrc,jdbcType=VARCHAR},
+            now()
+        )
+	</insert>
+
+	<!--  修改专业信息-->
+	<update id="update">
+        UPDATE major SET
+         majorname=#{majorname},
+         majorimgsrc=#{majorimgsrc},
+         update_time=now()
+        WHERE majorid=#{majorid}
+    </update>
+	<!-- 上传专业图片操作 -->
+	<update id="upload" >
+		update major
+		<set>
+			majorimgsrc = #{path}
+		</set>
+		where majorid=#{id}
+	</update>
+</mapper>
