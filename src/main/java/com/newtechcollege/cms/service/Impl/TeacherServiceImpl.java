@@ -41,7 +41,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public int edit(Teacher teacher) {
-        return teacherMapper.update(teacher);
+        return teacherMapper.updateByParams(teacher);
     }
 
 
@@ -55,12 +55,6 @@ public class TeacherServiceImpl implements TeacherService {
     public int delete(Integer id) {
         return teacherMapper.delete(id);
     }
-
-    @Override
-    public int publish(Integer id) {
-        return teacherMapper.publish(id);
-    }
-
 
     @Override
     public Integer updataTeacherImg(Integer id, String teacherImg) {

@@ -1,20 +1,22 @@
 package com.newtechcollege.cms.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.newtechcollege.cms.dao.*;
+import com.newtechcollege.cms.entity.Image;
 import com.newtechcollege.cms.myexception.MyException;
 import com.newtechcollege.cms.service.*;
+import com.newtechcollege.cms.service.Impl.UploadServiceImpl;
 import com.newtechcollege.cms.util.QiniuUtil;
 import com.newtechcollege.cms.util.RestfulUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.FileInputStream;
 import java.util.Map;
 import java.util.UUID;
@@ -35,6 +37,31 @@ public class UploadCtl {
     private SchoolMapper schoolMapper;
     @Autowired
     private SchoolService schoolService;
+    @Autowired
+    private UploadServiceImpl uploadService;
+
+    /**
+     * 上传banner图片
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    @Valid
+    @RequestMapping(value = "/image",method = RequestMethod.POST)
+    public String image(@NotEmpty(message = "name 字段缺失或者为空") String name,
+                        @NotEmpty(message = "description 字段缺失或者为空") String description,
+                        @RequestParam(value = "file") MultipartFile file) throws Exception{
+        String key = UUID.randomUUID().toString().substring(0,8);
+        String path = getPathImage(file,key);
+        Image image = new Image();
+        image.setName(name);
+        image.setDescription(description);
+        image.setUrl(path);
+        image.setQiniukey(key);
+        Image res = uploadService.addImage(image);
+        return RestfulUtil.json(res);
+    }
+
     /**
      * 上传实训图片
      * @param file
@@ -271,6 +298,14 @@ public class UploadCtl {
     public String getPath(MultipartFile file) throws Exception{
         FileInputStream inputStream = (FileInputStream)file.getInputStream();
         String path = QiniuUtil.uploadImg(inputStream, UUID.randomUUID().toString().substring(0,8));
+        if(path == null && path == ""){
+            throw new MyException("上传失败");
+        }
+        return  path;
+    }
+    public String getPathImage(MultipartFile file,String key) throws Exception{
+        FileInputStream inputStream = (FileInputStream)file.getInputStream();
+        String path = QiniuUtil.uploadImg(inputStream, key);
         if(path == null && path == ""){
             throw new MyException("上传失败");
         }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.cms.dao.ImageMapper">
+
+	<!-- 新增图片信息  -->
+	<insert id="insert"  keyProperty="id" useGeneratedKeys="true" parameterType="Image">
+		INSERT INTO image (
+			name,
+			description,
+			qiniukey,
+			url,
+			create_time,
+			status
+		)VALUES(
+			#{name},
+			#{description},
+			#{qiniukey},
+			#{url},
+			now(),
+			1
+		)
+	</insert>
+
+</mapper>

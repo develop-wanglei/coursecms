@@ -112,5 +112,15 @@ public class MajorCtl {
         }
         return RestfulUtil.json(res);
     }
+    /**
+     * 修改专业信息 --- 通用修改接口
+     */
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public String update(@PostiveInt Integer id,Major major)
+    {
+        major.setMajorid(id);
+        int i = majorService.updateCommon(major);
+        return RestfulUtil.json(i);
+    }
 
 }

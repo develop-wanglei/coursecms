@@ -28,7 +28,15 @@ public class CourseServiceImpl implements CourseService {
 
         return courseMapper.list();
     }
+    @Override
+    public List<Map<String,Object>> check_list() {
 
+        return courseMapper.check_list();
+    }
+    @Override
+    public Map<String,Object> checkCourseDetail(int id) {
+        return courseMapper.getCheckCourseById(id);
+    }
     @Override
     public List<Map<String,Object>> search(String title,String majorid,String teacherid) {
 
@@ -79,6 +87,16 @@ public class CourseServiceImpl implements CourseService {
             throw new MyException("教师或者专业参数不合法");
         }
         return courseMapper.update(course);
+    }
+    @Override
+    public int update(Course course) {
+        //参数校验  主要是数据类型和关联表的id是否合法
+        Integer integer = courseMapper.updateByParams(course);
+
+        if (integer!=1){
+            throw new MyException("修改课程信息失败");
+        }
+        return integer;
     }
 
     @Override

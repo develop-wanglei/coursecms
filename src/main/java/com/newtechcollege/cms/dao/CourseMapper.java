@@ -18,11 +18,17 @@ public interface CourseMapper {
 
     Map<String,Object> getCourseById(int id);
 
+    List<Map<String,Object>> check_list();
+
+    Map<String,Object> getCheckCourseById(int id);
+
     int insertTeacher(Teacher teacher);
 
     int insert(Course course);
 
     int update(Course course);
+
+    int updateByParams(Course course);
 
     int delete(int id);
 

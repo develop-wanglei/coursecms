@@ -35,8 +35,32 @@ public class CourseCtl {
     public String list() {
         List<Map<String, Object>> map =  courseService.list();
         if(map == null){
-         throw new MyException("未查询到数据");
-         }
+            throw new MyException("未查询到数据");
+        }
+        return RestfulUtil.json(map);
+    }
+    /**
+     * 审核课程列表
+     * @return []
+     */
+    @RequestMapping(value = "/check")
+    public String check_list() {
+        List<Map<String, Object>> map =  courseService.check_list();
+        if(map == null){
+            throw new MyException("未查询到数据");
+        }
+        return RestfulUtil.json(map);
+    }
+    /**
+     * 审核课程详情
+     * @return []
+     */
+    @RequestMapping(value = "/check/detail")
+    public String check_detail(@NotNull(message = "id 字段缺失或者为空") Integer id) {
+        Map<String, Object> map =  courseService.checkCourseDetail(id);
+        if(map == null){
+            throw new MyException("未查询到数据");
+        }
         return RestfulUtil.json(map);
     }
     /**
@@ -110,6 +134,17 @@ public class CourseCtl {
         if (integer!=1){
             throw new MyException("修改课程信息失败");
         }
+        return RestfulUtil.json(integer);
+    }
+    /**
+     * 修改课程信息 -- 通用接口
+     */
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public String update(@PostiveInt(message = "id 参数不合法") Integer id,Course course)
+    {
+        course.setCourseid(id);
+        Integer integer = courseService.update(course);
+
         return RestfulUtil.json(integer);
     }
 

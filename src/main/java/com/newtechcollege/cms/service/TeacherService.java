@@ -22,7 +22,6 @@ public interface TeacherService {
 
     int delete(Integer id);
 
-    int publish(Integer id) ;
 
     int edit(Teacher teacher);
 

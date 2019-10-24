@@ -21,9 +21,15 @@ public interface CourseService {
 
      int edit(Course course);
 
+     int update(Course course);
+
      int delete(int id);
 
      int publish(int id);
 
      int upload(Integer id,String path);
+
+     List<Map<String,Object>> check_list();
+
+     Map<String,Object> checkCourseDetail(int id);
 }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.newtechcollege.cms.dao.BannerMapper">
+
+
+
+    <!-- banner列表	-->
+	<select id="list" resultType="Banner">
+        SELECT * FROM banner WHERE status != -1
+	</select>
+	<!-- banner详情	-->
+	<select id="getBannerById" resultMap="bannerMap">
+        SELECT * FROM banner WHERE id=#{id} and status != -1
+	</select>
+	<!-- 根据 banner_id 获取 BannerItems 列表信息	-->
+	<select id="getBannerItemsByBanner_id" resultMap="bannerItemMap" parameterType="int">
+        SELECT * FROM banner_item WHERE banner_id=#{id} and status != -1
+	</select>
+	<select id="getBannerItemById" resultMap="bannerItemMap" parameterType="int">
+        SELECT * FROM banner_item WHERE id=#{id} and status != -1
+
+
+
+	</select>
+	<!-- 根据 img_id 获取 Image 信息	-->
+	<select id="getImageByImg_id" resultMap="imgMap" parameterType="int">
+        SELECT * FROM image WHERE id=#{img_id} and status != -1
+	</select>
+
+
+
+	<resultMap id="bannerMap" type="java.util.Map" >
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="description" property="description"/>
+		<result column="create_time" property="create_time"/>
+		<result column="status" property="status"/>
+		<collection property="bannerItems" select="getBannerItemsByBanner_id" ofType="BanenrItem" column="id">
+
+		</collection>
+	</resultMap>
+	<resultMap id="bannerItemMap" type="java.util.Map" >
+		<id column="id" property="id"/>
+		<result column="key_word" property="key_word"/>
+		<result column="img_id" property="img_id"/>
+		<result column="banner_id" property="banner_id"/>
+		<result column="type" property="type"/>
+		<result column="status" property="status"/>
+		<association property="image" select="getImageByImg_id" javaType="Image" column="img_id">
+
+		</association>
+	</resultMap>
+	<resultMap id="imgMap" type="java.util.Map" >
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="url" property="url"/>
+	</resultMap>
+
+	<!-- 新增图片信息  -->
+	<insert id="addBannerItem"   parameterType="BannerItem">
+		INSERT INTO banner_item (
+			img_id,
+			banner_id,
+			key_word,
+			create_time
+		)VALUES(
+			#{img_id},
+			#{banner_id},
+			#{key_word},
+			now()
+		)
+	</insert>
+
+	<!--  通用banner_item信息 支持单个参数和多个参数修改 -->
+	<update id="updateByParams">
+		UPDATE banner_item SET
+		<include refid="update_banner_item_set"></include>
+		WHERE id=#{id}
+	</update>
+
+	<sql id="update_banner_item_set">
+		<if test="img_id != null and img_id !=''">
+			img_id=#{img_id} ,
+		</if>
+		<if test="banner_id != null and banner_id !=''">
+			banner_id=#{banner_id} ,
+		</if>
+		<if test="key_word != null and key_word !=''">
+			key_word=#{key_word} ,
+		</if>
+		<if test="status != null">
+			status=#{status} ,
+		</if>
+		update_time=now()
+	</sql>
+</mapper>

@@ -24,9 +24,8 @@ public interface TeacherMapper {
 
     int delete(Integer id);
 
-    int publish(Integer id);
 
-    int update(Teacher teacher);
+    int updateByParams(Teacher teacher);
 
     Integer updataTeacherImg(Integer id,String teacherImg);
 }

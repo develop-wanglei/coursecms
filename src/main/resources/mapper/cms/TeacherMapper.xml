@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.newtechcollege.cms.dao.TeacherMapper">
-<!--查询教师列表-->
+    <!--查询教师列表-->
     <select id="selectTeacherAll" resultType="com.newtechcollege.cms.entity.Teacher">
         SELECT * FROM teacher WHERE teacherstatus != -1
     </select>
-<!--查询教师详情-->
+    <!--查询教师详情-->
     <select id="detail" resultType="com.newtechcollege.cms.entity.Teacher">
         SELECT * FROM teacher WHERE teacherid= #{id} and teacherstatus != -1
     </select>
-<!--教师姓名模糊查询-->
+    <!--教师姓名模糊查询-->
     <select id="selectTeacherLike" resultType="com.newtechcollege.cms.entity.Teacher">
         SELECT * FROM teacher WHERE teachername LIKE #{arg0} and teacherstatus != -1
     </select>
-<!--    新增教师-->
-<insert id="insertTeacher" parameterType="com.newtechcollege.cms.entity.Teacher">
+
+
+    <!--    新增教师-->
+    <insert id="insertTeacher" parameterType="com.newtechcollege.cms.entity.Teacher">
     INSERT INTO teacher(
             teachername,
             teacherpro,
@@ -27,25 +29,39 @@
             #{teacherimgsrc,jdbcType=VARCHAR}
         )
 </insert>
-<!--    删除教师-->
+    <!--    删除教师-->
     <update id="delete">
         UPDATE teacher SET teacherstatus = -1 WHERE teacherid=#{id}
     </update>
-<!--    修改教师是否展示-->
-    <update id="publish">
-        UPDATE teacher SET teacherstatus = 1  WHERE teacherid=#{id}
-    </update>
-<!--    修改教师信息-->
-    <update id="update">
+    <!--    修改教师信息-->
+    <update id="updateByParams">
         UPDATE teacher SET
-         teachername=#{teachername},
-         teacherpro=#{teacherpro},
-         teacherdetail=#{teacherdetail},
-         teacherimgsrc=#{teacherimgsrc}
+            <include refid="update_teacher_set"></include>
         WHERE teacherid=#{teacherid}
     </update>
-<!--    修改教师头像-->
+    <!--    修改教师头像-->
     <update id="updateAvatar">
         UPDATE teacher SET teacherimgsrc=#{teacherImg} WHERE teacherid=#{id}
     </update>
+
+
+    <sql id="update_teacher_set">
+        <if test="teachername != null and teachername !=''">
+            teachername=#{teachername} ,
+        </if>
+
+        <if test="teacherpro != null and teacherpro !=''">
+            teacherpro=#{teacherpro},
+        </if>
+        <if test="teacherdetail != null and teacherdetail !=''">
+            teacherdetail=#{teacherdetail},
+        </if>
+        <if test="teacherimgsrc != null and teacherimgsrc !=''">
+            teacherimgsrc=#{teacherimgsrc},
+        </if>
+        <if test="teacherstatus != null">
+            teacherstatus=#{teacherstatus},
+        </if>
+        update_time=now()
+    </sql>
 </mapper>

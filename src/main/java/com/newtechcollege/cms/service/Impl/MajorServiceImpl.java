@@ -2,6 +2,7 @@ package com.newtechcollege.cms.service.Impl;
 
 import com.newtechcollege.cms.dao.MajorMapper;
 import com.newtechcollege.cms.entity.Major;
+import com.newtechcollege.cms.myexception.MyException;
 import com.newtechcollege.cms.service.MajorService;
 import org.springframework.stereotype.Service;
 
@@ -58,4 +59,12 @@ public class MajorServiceImpl implements MajorService {
         return  majorMapper.upload(id,path);
     }
 
+    @Override
+    public int updateCommon(Major major){
+        int i = majorMapper.updateCommon(major);
+        if(i != 1){
+            throw new MyException("更新错误,请稍后再试");
+        }
+        return i;
+    }
 }

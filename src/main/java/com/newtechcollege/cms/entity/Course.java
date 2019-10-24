@@ -22,8 +22,6 @@ public class Course {
     private Integer type_id;
 
 
-
-
     @NotEmpty(message = "coursename 字段缺失或为空")
     private String coursename;
     @NotEmpty(message = "coursedesc 字段缺失或为空")

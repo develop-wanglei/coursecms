@@ -24,5 +24,7 @@ public interface MajorMapper {
     int publish(int id);
 
     int upload(Integer id,String path);
+
+    int updateCommon(Major major);
 }
 

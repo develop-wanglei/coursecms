@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.newtechcollege.cms.annotation.validate.PostiveInt;
@@ -90,11 +91,21 @@ public class TeacherCtl {
     /**
      * 发布
      */
-    @RequestMapping(value = "/publish")
-    public String status(@NotNull(message = "id不能为空") Integer id){
-        Integer integer = teacherService.publish(id);
+    @RequestMapping(value = "/update")
+    public String update(@NotNull(message = "id不能为空") Integer id,
+                         @NotNull(message = "status 不能为空") Integer status,
+                         Teacher teacher){
+
+        if(status == 1 || status == 0){
+            teacher.setTeacherid(id);
+            teacher.setTeacherstatus(status);
+        }else{
+            throw new MyException("status 参数不合法");
+        }
+
+        Integer integer = teacherService.edit(teacher);
         if (integer!=1){
-            throw new MyException("发布失败");
+            throw new MyException("操作失败,请稍后再试");
         }
         return RestfulUtil.json(integer);
     }
@@ -125,7 +136,8 @@ public class TeacherCtl {
      * 修改教师信息
      */
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    public String edit(@PostiveInt Integer teacherid,@Valid Teacher teacher) {
+    public String edit(@PostiveInt Integer id,@Valid Teacher teacher) {
+        teacher.setTeacherid(id);
         Integer integer = teacherService.edit(teacher);
         if (integer!=1){
             throw new MyException("修改教师信息失败");

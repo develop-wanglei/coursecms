@@ -75,4 +75,24 @@
 		</set>
 		where majorid=#{id}
 	</update>
+
+
+	<!--  修改专业信息 通用 支持单个或多个字段的修改-->
+	<update id="updateCommon">
+        UPDATE major SET
+		<include refid="update_major_set"></include>
+        WHERE majorid=#{majorid}
+    </update>
+	<sql id="update_major_set">
+		<if test="majorname != null and majorname !=''">
+			majorname=#{majorname} ,
+		</if>
+		<if test="majorimgsrc != null and majorimgsrc !=''">
+			majorimgsrc=#{majorimgsrc} ,
+		</if>
+		<if test="majorstatus != null">
+			majorstatus=#{majorstatus} ,
+		</if>
+		update_time=now()
+	</sql>
 </mapper>
