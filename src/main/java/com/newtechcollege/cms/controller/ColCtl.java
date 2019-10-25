@@ -36,10 +36,10 @@ public class ColCtl {
     public String list() {
         List<Map<String, Object>> map =  colService.list();
         if(map == null){
-        throw new MyException("未查询到数据");
-    }
+            throw new MyException("未查询到数据");
+        }
         return RestfulUtil.json(map);
-}
+    }
      /**
      * 搜索实训基地
      * @return []
@@ -115,5 +115,14 @@ public class ColCtl {
             throw new MyException("修改实训信息失败");
         }
         return RestfulUtil.json(integer);
+    }
+
+    /**
+     * 小程序 实习企业入驻 信息列表
+     */
+    @RequestMapping(value = "/recruit")
+    public String recruit() {
+        List<Object> res = colService.recruits();
+        return RestfulUtil.json(res);
     }
 }

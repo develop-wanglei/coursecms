@@ -3,6 +3,7 @@ package com.newtechcollege.cms.service;
 import com.newtechcollege.cms.entity.Teacher;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,4 +27,7 @@ public interface TeacherService {
     int edit(Teacher teacher);
 
     Integer updataTeacherImg(Integer id,String teacherImg);
+
+    List<Object> recruits() ;
+
 }

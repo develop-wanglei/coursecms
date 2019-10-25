@@ -144,4 +144,13 @@ public class TeacherCtl {
         }
         return RestfulUtil.json(integer);
     }
+
+    /**
+     * 小程序 讲师招募 信息列表
+     */
+    @RequestMapping(value = "/recruit")
+    public String recruit() {
+        List<Object> res = teacherService.recruits();
+        return RestfulUtil.json(res);
+    }
 }

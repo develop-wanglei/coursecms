@@ -1,21 +1,28 @@
 package com.newtechcollege.cms.service.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.newtechcollege.cms.dao.ColMapper;
 import com.newtechcollege.cms.entity.Col;
+import com.newtechcollege.cms.myexception.MyException;
 import com.newtechcollege.cms.service.ColService;
 
+import com.newtechcollege.cms.util.RedisUtil;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ColServiceImpl implements ColService {
 
     @Resource
-    private ColMapper colMapper;  
+    private ColMapper colMapper;
+    @Resource
+    private RedisUtil redisUtil;
 
     @Override
     public List<Map<String,Object>> list() {
@@ -55,5 +62,17 @@ public class ColServiceImpl implements ColService {
     @Override
     public int upload(Integer id,String path){
         return  colMapper.upload(id,path);
+    }
+
+    @Override
+    public List<Object> recruits() {
+        String col = (String)redisUtil.get("col");
+
+        if(col == null){
+            throw new MyException("未查到记录");
+        }
+        JSONArray json =  JSON.parseArray(col);
+        List<Object> res = json;
+        return  res;
     }
 }

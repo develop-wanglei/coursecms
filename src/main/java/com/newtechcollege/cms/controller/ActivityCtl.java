@@ -64,7 +64,6 @@ public class ActivityCtl {
      */
     @RequestMapping(value = "/edit")
     public int edit(Discover discover) {
-        System.out.println(discover);
         return activityService.edit(discover);
     }
 

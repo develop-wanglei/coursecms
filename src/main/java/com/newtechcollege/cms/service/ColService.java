@@ -21,4 +21,6 @@ public interface ColService {
      int publish(int id) ;
 
      int upload(Integer id,String path);
+
+     List<Object> recruits() ;
 }

@@ -1,11 +1,16 @@
 package com.newtechcollege.cms.service.Impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.newtechcollege.cms.dao.TeacherMapper;
 import com.newtechcollege.cms.entity.Teacher;
+import com.newtechcollege.cms.myexception.MyException;
 import com.newtechcollege.cms.service.TeacherService;
+import com.newtechcollege.cms.util.RedisUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +26,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Resource
     private TeacherMapper teacherMapper;
+    @Resource
+    private RedisUtil redisUtil;
     
     @Override
     public List<Teacher> selectTeacherAll() {
@@ -59,5 +66,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Integer updataTeacherImg(Integer id, String teacherImg) {
         return teacherMapper.updataTeacherImg(id,teacherImg);
+    }
+    @Override
+    public List<Object> recruits() {
+        String teacher = (String)redisUtil.get("teacher");
+        if(teacher == null){
+            throw new MyException("未查到记录");
+        }
+        JSONArray json =  JSON.parseArray(teacher);
+        List<Object> res = json;
+        return  res;
     }
 }
